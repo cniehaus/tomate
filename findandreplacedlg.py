@@ -22,10 +22,14 @@ class FindAndReplaceDlg(QDialog,
         self.setupUi(self)
         self.updateUi()
 
+	self.foodlist = []
+
 	self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
 	self.connect(self.foodCombo, SIGNAL("activated(QString)"), self.foodSelected)
 
-	f = FoodObject( "Tomate", 0.2, 0.4, 0.3, 10.0 )
+	self.foodlist = self.initializeFood()
+
+	self.updateUi()
 
     def addFood(self):
 	print "adding food"
@@ -34,7 +38,23 @@ class FindAndReplaceDlg(QDialog,
 	print "fillig combos", text
 
     def updateUi(self):
-    	print "in updateUi"
+	L = self.initializeFood()
+	for i in L:
+		topItem = QTreeWidgetItem(self.treeWidget)
+		o = QTreeWidgetItem( topItem )
+		topItem.setText( 0, i.foodname )
+		o.setText( 0, "Fett: %d" % (i.fat) )
+		o.setText( 1, "Kohlenhydrate: %d" % (i.carbon) )
+		o.setText( 2, "Protein: %d" % (i.protein) )
+		o.setText( 3, "KCal: %d" % (i.energy) )
+
+    def initializeFood(self):
+	a = FoodObject( "Tomate", 0.2, 0.4, 0.3, 10.0 )
+	b = FoodObject( "Bier", 0.2, 0.4, 0.3, 10.0 )
+	c = FoodObject( "Salate (50g)", 0.2, 0.4, 0.3, 10.0 )
+	d = FoodObject( "Apfelsaft (100mL)", 0.2, 0.4, 0.3, 10.0 )
+
+	return [ a, b, c, d ]
 
 class FoodObject:
     def __init__(self, foodname, fat, carbon, protein, energy):
