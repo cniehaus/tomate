@@ -22,8 +22,28 @@ class FindAndReplaceDlg(QDialog,
         self.setupUi(self)
         self.updateUi()
 
+	self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
+	self.connect(self.foodCombo, SIGNAL("activated(QString)"), self.foodSelected)
+
+	f = FoodObject( "Tomate", 0.2, 0.4, 0.3, 10.0 )
+
+    def addFood(self):
+	print "adding food"
+    
+    def foodSelected(self, text):
+	print "fillig combos", text
+
     def updateUi(self):
-	print "in updateUi"
+    	print "in updateUi"
+
+class FoodObject:
+    def __init__(self, foodname, fat, carbon, protein, energy):
+	self.foodname = foodname
+	self.fat = fat
+	self.carbon = carbon
+	self.protein = protein
+	self.energy = energy
+	print "New object: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
 
 if __name__ == "__main__":
     import sys
