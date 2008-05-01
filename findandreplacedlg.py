@@ -32,7 +32,23 @@ class FindAndReplaceDlg(QDialog,
 	self.updateUi()
 
     def addFood(self):
-	print "adding food"
+	f = self.findFood( self.foodCombo.currentText() )
+
+	topItem = QTreeWidgetItem(self.treeWidget)
+	o = QTreeWidgetItem( topItem )
+	topItem.setText( 0, f.foodname )
+	o.setText( 0, "Fett: %d" % (f.fat) )
+	o.setText( 1, "Kohlenhydrate: %d" % (f.carbon) )
+	o.setText( 2, "Protein: %d" % (f.protein) )
+	o.setText( 3, "KCal: %d" % (f.energy) )
+    
+    def findFood(self, name):
+	tempList = self.initializeFood()
+	print "searching for ", name
+	for i in tempList:
+		if i.foodname == name:
+			print "found ", i.foodname
+			return i
     
     def foodSelected(self, text):
 	print "fillig combos", text
@@ -53,22 +69,15 @@ class FindAndReplaceDlg(QDialog,
 		
 	for i in L:
 		self.foodCombo.addItem( i.foodname )
-		topItem = QTreeWidgetItem(self.treeWidget)
-		o = QTreeWidgetItem( topItem )
-		topItem.setText( 0, i.foodname )
-		o.setText( 0, "Fett: %d" % (i.fat) )
-		o.setText( 1, "Kohlenhydrate: %d" % (i.carbon) )
-		o.setText( 2, "Protein: %d" % (i.protein) )
-		o.setText( 3, "KCal: %d" % (i.energy) )
-
+		
     def initializeFood(self):
 	l = []
 	
-	l.append( FoodObject( "Tomate", 2.2, 0.4, 0.3, 11.5, False ) )
-	l.append( FoodObject( "Bier", 0.2, 0.4, 0.3, 14.0, True ) )
-	l.append( FoodObject( "Cola", 0.9, 0.1, 3.3, 10.0, True ) )
-	l.append( FoodObject( "Salate (50g)", 0.2, 0.4, 0.3, 10.0, False ) )
-	l.append( FoodObject( "Apfelsaft (100mL)", 0.2, 0.4, 0.3, 10.0, True ) )
+	l.append( FoodObject( "Tomate", 1 , 2.2, 0.4, 0.3, 11.5, False ) )
+	l.append( FoodObject( "Bier", 100, 0.2, 0.4, 0.3, 14.0, True ) )
+	l.append( FoodObject( "Cola", 100, 0.9, 0.1, 3.3, 10.0, True ) )
+	l.append( FoodObject( "Salate (50g)", 50, 0.2, 0.4, 0.3, 10.0, False ) )
+	l.append( FoodObject( "Apfelsaft (100mL)", 100, 0.2, 0.4, 0.3, 10.0, True ) )
 
 	return l
 
