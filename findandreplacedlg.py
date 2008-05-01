@@ -9,12 +9,13 @@
 # warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
 # the GNU General Public License for more details.
 
-import re
+#import re
+import csv
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import ui_findandreplacedlg
 
-debug = False
+debug = True
 
 class FindAndReplaceDlg(QDialog,
         ui_findandreplacedlg.Ui_FindAndReplaceDlg):
@@ -31,6 +32,7 @@ class FindAndReplaceDlg(QDialog,
 	self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
 
 	self.updateUi()
+    	self.loadFood()
 	
     def updateCounter(self):
 	""" This method updates all four LCD displays """
@@ -67,11 +69,13 @@ class FindAndReplaceDlg(QDialog,
 		topItem = QTreeWidgetItem(self.treeWidget)
 		o = QTreeWidgetItem( topItem )
 		topItem.setText( 0, food.foodname )
-		o.setText( 0, "Fett: %d" % (food.fat) )
-		o.setText( 1, "Kohlenhydrate: %d" % (food.carbon) )
-		o.setText( 2, "Protein: %d" % (food.protein) )
-		o.setText( 3, "KCal: %d" % (food.energy) )
-		o.setText( 4, "Faktor: %d" % (value) )
+		o.setText( 0, str(food.fat) )
+		o.setText( 1, str(food.carbon) )
+		o.setText( 2, str(food.protein) )
+		o.setText( 3, str(food.energy) )
+		o.setText( 4, str(value ) )
+		#the next line is there to auto-expand the items
+		self.treeWidget.expandItem( topItem )
 		
 	self.updateUi()
 	
@@ -86,7 +90,7 @@ class FindAndReplaceDlg(QDialog,
 	print "Food amount after : ", self.foodlist[food.foodname]	
     
     def findFood(self, name):
-	tempList = self.initializeFood()
+	tempList = self.loadFood()
 	#print "searching for ", name
 	for i in tempList:
 		if i.foodname == name:
@@ -100,7 +104,7 @@ class FindAndReplaceDlg(QDialog,
 	self.foodCombo.clear()
 	
 	L = []
-	tempList = self.initializeFood()
+	tempList = self.loadFood()
 	
 	for i in tempList:
 		if self.foodstyle.currentIndex() == 0:
@@ -115,14 +119,21 @@ class FindAndReplaceDlg(QDialog,
 		
 	self.updateCounter()
 		
-    def initializeFood(self):
-	l = []
-	
-	l.append( FoodObject( "Tomate", 1 , 2.2, 0.4, 0.3, 11.5, False ) )
-	l.append( FoodObject( "Bier", 100, 0.2, 0.4, 0.3, 14.0, True ) )
-	l.append( FoodObject( "Cola", 100, 0.9, 0.1, 3.3, 10.0, True ) )
-	l.append( FoodObject( "Salate (50g)", 50, 0.2, 0.4, 0.3, 10.0, False ) )
-	l.append( FoodObject( "Apfelsaft (100mL)", 100, 0.2, 0.4, 0.3, 10.0, True ) )
+    
+    def loadFood(self):
+    	l = []
+
+        reader = csv.reader( open( "food.csv",  "rb"))
+        for row in reader:
+	    name = row[0]
+	    amount = int(row[1])
+	    fat = float(row[2])
+            carbon = float(row[3])
+	    protein = float(row[4])
+	    energy = float(row[5])
+	    liquid = bool(int(row[6]))
+	   
+	    l.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
 
 	return l
 

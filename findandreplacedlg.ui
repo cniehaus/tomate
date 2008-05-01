@@ -33,22 +33,22 @@
          </property>
          <column>
           <property name="text" >
-           <string>1</string>
+           <string>Fett</string>
           </property>
          </column>
          <column>
           <property name="text" >
-           <string>2</string>
+           <string>Kohlenhydrate</string>
           </property>
          </column>
          <column>
           <property name="text" >
-           <string>3</string>
+           <string>Protein</string>
           </property>
          </column>
          <column>
           <property name="text" >
-           <string>4</string>
+           <string>Kilokalorien</string>
           </property>
          </column>
          <column>
