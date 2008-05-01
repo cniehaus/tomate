@@ -23,28 +23,71 @@ class FindAndReplaceDlg(QDialog,
         super(FindAndReplaceDlg, self).__init__(parent)
         self.setupUi(self)
 
-	self.foodlist = []
+	# This dictionary saves all food for the day
+	self.foodlist = {}
 
 	self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
 	self.connect(self.foodCombo, SIGNAL("activated(QString)"), self.foodSelected)
 	self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
 
 	self.updateUi()
+	
+    def updateCounter(self):
+	""" This method updates all four LCD displays """
+	cal_counter = 0.0
+	fat_counter = 0.0
+	protein_counter = 0.0
+	carbon_counter = 0.0
+	
+	# Iterating over all fooditems in the list
+	for key, value in self.foodlist.iteritems():
+		food = self.findFood(key)
+		cal_counter +=  food.energy * value
+		carbon_counter +=  food.carbon * value
+		fat_counter +=  food.fat * value
+		protein_counter +=  food.protein * value
+		
+	#now updating the LCD counters
+	self.kcallcd.display( cal_counter )
+	self.carbonlcd.display( carbon_counter )
+	self.fatlcd.display( fat_counter )
+	self.proteinlcd.display( protein_counter )
 
     def addFood(self):
 	f = self.findFood( self.foodCombo.currentText() )
+	factor = self.doubleSpinBox.value()
 
-	topItem = QTreeWidgetItem(self.treeWidget)
-	o = QTreeWidgetItem( topItem )
-	topItem.setText( 0, f.foodname )
-	o.setText( 0, "Fett: %d" % (f.fat) )
-	o.setText( 1, "Kohlenhydrate: %d" % (f.carbon) )
-	o.setText( 2, "Protein: %d" % (f.protein) )
-	o.setText( 3, "KCal: %d" % (f.energy) )
+	self.addFoodToDatabase( f, factor )
+	
+	self.treeWidget.clear()
+	
+	# Iterating over all fooditems in the list
+	for key, value in self.foodlist.iteritems():
+		food = self.findFood(key)
+		topItem = QTreeWidgetItem(self.treeWidget)
+		o = QTreeWidgetItem( topItem )
+		topItem.setText( 0, food.foodname )
+		o.setText( 0, "Fett: %d" % (food.fat) )
+		o.setText( 1, "Kohlenhydrate: %d" % (food.carbon) )
+		o.setText( 2, "Protein: %d" % (food.protein) )
+		o.setText( 3, "KCal: %d" % (food.energy) )
+		o.setText( 4, "Faktor: %d" % (value) )
+		
+	self.updateUi()
+	
+    def addFoodToDatabase(self, food, factor):
+	if self.foodlist.has_key( food.foodname):
+		#print "Food amount, before: ", self.foodlist[food.foodname]
+		#print "Adding %s to the databse" % (food.foodname)
+		self.foodlist[food.foodname] += factor
+	else:
+		#print "%s not yet in the database!" % (food.foodname)
+		self.foodlist[food.foodname] = factor	
+	print "Food amount after : ", self.foodlist[food.foodname]	
     
     def findFood(self, name):
 	tempList = self.initializeFood()
-	print "searching for ", name
+	#print "searching for ", name
 	for i in tempList:
 		if i.foodname == name:
 			print "found ", i.foodname
@@ -69,6 +112,8 @@ class FindAndReplaceDlg(QDialog,
 		
 	for i in L:
 		self.foodCombo.addItem( i.foodname )
+		
+	self.updateCounter()
 		
     def initializeFood(self):
 	l = []
