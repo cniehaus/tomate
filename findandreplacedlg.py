@@ -14,20 +14,20 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import ui_findandreplacedlg
 
+debug = False
+
 class FindAndReplaceDlg(QDialog,
         ui_findandreplacedlg.Ui_FindAndReplaceDlg):
 
     def __init__(self, parent=None):
         super(FindAndReplaceDlg, self).__init__(parent)
         self.setupUi(self)
-        self.updateUi()
 
 	self.foodlist = []
 
 	self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
 	self.connect(self.foodCombo, SIGNAL("activated(QString)"), self.foodSelected)
-
-	self.foodlist = self.initializeFood()
+	self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
 
 	self.updateUi()
 
@@ -38,8 +38,21 @@ class FindAndReplaceDlg(QDialog,
 	print "fillig combos", text
 
     def updateUi(self):
-	L = self.initializeFood()
+	self.foodCombo.clear()
+	
+	L = []
+	tempList = self.initializeFood()
+	
+	for i in tempList:
+		if self.foodstyle.currentIndex() == 0:
+			if i.liquid == True:
+				L.append( i )
+		else:
+			if i.liquid == False:
+				L.append( i )
+		
 	for i in L:
+		self.foodCombo.addItem( i.foodname )
 		topItem = QTreeWidgetItem(self.treeWidget)
 		o = QTreeWidgetItem( topItem )
 		topItem.setText( 0, i.foodname )
@@ -49,21 +62,33 @@ class FindAndReplaceDlg(QDialog,
 		o.setText( 3, "KCal: %d" % (i.energy) )
 
     def initializeFood(self):
-	a = FoodObject( "Tomate", 0.2, 0.4, 0.3, 10.0 )
-	b = FoodObject( "Bier", 0.2, 0.4, 0.3, 10.0 )
-	c = FoodObject( "Salate (50g)", 0.2, 0.4, 0.3, 10.0 )
-	d = FoodObject( "Apfelsaft (100mL)", 0.2, 0.4, 0.3, 10.0 )
+	l = []
+	
+	l.append( FoodObject( "Tomate", 2.2, 0.4, 0.3, 11.5, False ) )
+	l.append( FoodObject( "Bier", 0.2, 0.4, 0.3, 14.0, True ) )
+	l.append( FoodObject( "Cola", 0.9, 0.1, 3.3, 10.0, True ) )
+	l.append( FoodObject( "Salate (50g)", 0.2, 0.4, 0.3, 10.0, False ) )
+	l.append( FoodObject( "Apfelsaft (100mL)", 0.2, 0.4, 0.3, 10.0, True ) )
 
-	return [ a, b, c, d ]
+	return l
 
 class FoodObject:
-    def __init__(self, foodname, fat, carbon, protein, energy):
+    def __init__(self, foodname, amount, fat, carbon, protein, energy, liquid = False):
 	self.foodname = foodname
+	self.amount = amount
 	self.fat = fat
 	self.carbon = carbon
 	self.protein = protein
 	self.energy = energy
-	print "New object: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
+	self.liquid = liquid
+	
+	if not debug:
+		return
+	
+	if liquid:
+		print "New liquid: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
+	else:
+		print "New food: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
 
 if __name__ == "__main__":
     import sys
