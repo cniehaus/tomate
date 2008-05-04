@@ -9,7 +9,7 @@
 # warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
 # the GNU General Public License for more details.
 
-debug = True
+debug = False
 
 class FoodObject:
     """ A FoodObject can be a food like cheese or a liquid like a juice """

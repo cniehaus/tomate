@@ -33,10 +33,14 @@ class MainDialog(QDialog,
         date = datetime.today()
         self.dateEdit.setDate( QDate( date.year, date.month, date.day ) )
 
+        self.connect(self.todayButton, SIGNAL("clicked()"), self.setDateToToday)
         self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
         self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
 
         self.updateUi()
+
+    def setDateToToday(self):
+        self.dateEdit.setDate( QDate.currentDate() ) 
 
     def updateCounter(self):
         """ This method updates all four LCD displays """
@@ -84,19 +88,18 @@ class MainDialog(QDialog,
         self.updateUi()
 
     def addFoodToDatabase(self, food, factor):
+        """ adding the food 'food' with the factor of 'factor' to the database """
         if self.foodlist.has_key( food.data["name"]):
             self.foodlist[food.data["name"] ] += factor
         else:
             self.foodlist[food.data["name"] ] = factor	
-            
-        print "Food amount after : ", self.foodlist[food.data["name"] ]
 
     def findFood(self, name):
         """ return the food with the name 'name' """
         tempList = self.food
         for i in tempList:
             if i.data["name"] == name:
-                print "found ", i.data["name"]
+                #print "found ", i.data["name"]
                 return i
 
     def updateUi(self):
