@@ -30,14 +30,21 @@ class MainDialog(QDialog,
         self.food = []
         self.loadFood() # Now fill the list so that the data can be accessed
 
-        date = datetime.today()
-        self.dateEdit.setDate( QDate( date.year, date.month, date.day ) )
+        self.dateEdit.setDate( QDate.currentDate() )
 
-        self.connect(self.todayButton, SIGNAL("clicked()"), self.setDateToToday)
-        self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
-        self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
+        self.connect(self.todayButton, SIGNAL("clicked()"), \
+                self.setDateToToday)
+        self.connect(self.addButton, SIGNAL("clicked()"), \
+                self.addFood)
+        self.connect(self.foodstyle, SIGNAL("activated(int)"), \
+                self.updateUi)
+        self.connect(self.dateEdit, SIGNAL("dateChanged(QDate)"), \
+                self.dateChanged)
 
         self.updateUi()
+
+    def dateChanged(self, date):
+        print date.toString()
 
     def setDateToToday(self):
         self.dateEdit.setDate( QDate.currentDate() ) 
