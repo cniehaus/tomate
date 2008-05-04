@@ -17,7 +17,7 @@ import ui_findandreplacedlg
 debug = True
 
 class FindAndReplaceDlg(QDialog,
-        ui_findandreplacedlg.Ui_FindAndReplaceDlg):
+        ui_findandreplacedlg.Ui_MainDlg):
 
     def __init__(self, parent=None):
         super(FindAndReplaceDlg, self).__init__(parent)
