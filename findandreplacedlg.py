@@ -66,7 +66,7 @@ class MainDialog(QDialog,
             food = self.findFood(key)
             topItem = QTreeWidgetItem(self.treeWidget)
             o = QTreeWidgetItem( topItem )
-            topItem.setText( 0, food.foodname )
+            topItem.setText( 0, food.data["name"] )
             o.setText( 0, str(food.data["fat"]) )
             o.setText( 1, str(food.data["carbon"]) )
             o.setText( 2, str(food.data["protein"]) )
@@ -78,19 +78,19 @@ class MainDialog(QDialog,
         self.updateUi()
 
     def addFoodToDatabase(self, food, factor):
-        if self.foodlist.has_key( food.foodname):
-            self.foodlist[food.foodname] += factor
+        if self.foodlist.has_key( food.data["name"]):
+            self.foodlist[food.data["name"] ] += factor
         else:
-            self.foodlist[food.foodname] = factor	
+            self.foodlist[food.data["name"] ] = factor	
             
-        print "Food amount after : ", self.foodlist[food.foodname]	
+        print "Food amount after : ", self.foodlist[food.data["name"] ]
 
     def findFood(self, name):
         tempList = self.loadFood()
         #print "searching for ", name
         for i in tempList:
-            if i.foodname == name:
-                print "found ", i.foodname
+            if i.data["name"] == name:
+                print "found ", i.data["name"]
                 return i
 
     def updateUi(self):
@@ -109,7 +109,7 @@ class MainDialog(QDialog,
                     L.append( i )
 
         for i in L:
-            self.foodCombo.addItem( i.foodname )
+            self.foodCombo.addItem( i.data["name"] )
 
         self.updateCounter()
 

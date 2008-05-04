@@ -14,15 +14,9 @@ debug = True
 class FoodObject:
     """ A FoodObject can be a food like cheese or a liquid like a juice """
     def __init__(self, foodname, amount, fat, carbon, protein, energy, liquid = False):
-        self.foodname = foodname
-        #self.amount = amount
-        #self.fat = fat
-        #self.carbon = carbon
-        #self.protein = protein
-        #self.energy = energy
-        #self.liquid = liquid
-
-        self.data = {"name" : foodname, "amount" : amount, "fat" : fat, "carbon" : carbon, "protein" : protein, "energy" : energy, "liquid" : liquid }
+        self.data = {"name" : foodname, "amount" : amount, "fat" : fat, \
+                "carbon" : carbon, "protein" : protein, "energy" : energy, \
+                "liquid" : liquid }
 
         if not debug:
             return
