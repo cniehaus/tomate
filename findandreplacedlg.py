@@ -42,10 +42,10 @@ class MainDialog(QDialog,
         # Iterating over all fooditems in the list
         for key, value in self.foodlist.iteritems():
             food = self.findFood(key)
-            cal_counter +=  food.energy * value
-            carbon_counter +=  food.carbon * value
-            fat_counter +=  food.fat * value
-            protein_counter +=  food.protein * value
+            cal_counter +=  food.data["energy"] * value
+            carbon_counter +=  food.data["carbon"] * value
+            fat_counter +=  food.data["fat"] * value
+            protein_counter +=  food.data["protein"] * value
 
         #now updating the LCD counters
         self.kcallcd.display( cal_counter )
@@ -67,11 +67,11 @@ class MainDialog(QDialog,
             topItem = QTreeWidgetItem(self.treeWidget)
             o = QTreeWidgetItem( topItem )
             topItem.setText( 0, food.foodname )
-            o.setText( 0, str(food.fat) )
-            o.setText( 1, str(food.carbon) )
-            o.setText( 2, str(food.protein) )
-            o.setText( 3, str(food.energy) )
-            o.setText( 4, str(value ) )
+            o.setText( 0, str(food.data["fat"]) )
+            o.setText( 1, str(food.data["carbon"]) )
+            o.setText( 2, str(food.data["protein"]) )
+            o.setText( 3, str(food.data["energy"]) )
+            o.setText( 4, str(value) )
             #the next line is there to auto-expand the items
             self.treeWidget.expandItem( topItem )
 
@@ -79,11 +79,8 @@ class MainDialog(QDialog,
 
     def addFoodToDatabase(self, food, factor):
         if self.foodlist.has_key( food.foodname):
-            #print "Food amount, before: ", self.foodlist[food.foodname]
-            #print "Adding %s to the databse" % (food.foodname)
             self.foodlist[food.foodname] += factor
         else:
-            #print "%s not yet in the database!" % (food.foodname)
             self.foodlist[food.foodname] = factor	
             
         print "Food amount after : ", self.foodlist[food.foodname]	
@@ -105,10 +102,10 @@ class MainDialog(QDialog,
 
         for i in tempList:
             if self.foodstyle.currentIndex() == 0:
-                if i.liquid == True:
+                if i.data["liquid"] == True:
                     L.append( i )
             else:
-                if i.liquid == False:
+                if i.data["liquid"] == False:
                     L.append( i )
 
         for i in L:
@@ -129,7 +126,7 @@ class MainDialog(QDialog,
             carbon = float(row[3])
             protein = float(row[4])
             energy = float(row[5])
-            liquid = row[6] != "1"
+            liquid = bool(int(row[6]))
             l.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
 
         return l
