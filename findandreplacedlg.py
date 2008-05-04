@@ -34,6 +34,8 @@ class MainDialog(QDialog,
 
         self.connect(self.todayButton, SIGNAL("clicked()"), \
                 self.setDateToToday)
+        self.connect(self.saveButton, SIGNAL("clicked()"), \
+                self.saveFoodList)
         self.connect(self.addButton, SIGNAL("clicked()"), \
                 self.addFood)
         self.connect(self.foodstyle, SIGNAL("activated(int)"), \
@@ -45,6 +47,7 @@ class MainDialog(QDialog,
 
     def dateChanged(self, date):
         print date.toString()
+        self.loadFoodFromDate(date)
 
     def setDateToToday(self):
         self.dateEdit.setDate( QDate.currentDate() ) 
@@ -76,21 +79,6 @@ class MainDialog(QDialog,
 
         self.addFoodToDatabase( f, factor )
 
-        self.treeWidget.clear()
-
-        # Iterating over all fooditems in the list
-        for key, value in self.foodlist.iteritems():
-            food = self.findFood(key)
-            topItem = QTreeWidgetItem(self.treeWidget)
-            o = QTreeWidgetItem( topItem )
-            topItem.setText( 0, food.data["name"] )
-            o.setText( 0, unicode(food.data["fat"]) )
-            o.setText( 1, unicode(food.data["carbon"]) )
-            o.setText( 2, unicode(food.data["protein"]) )
-            o.setText( 3, unicode(food.data["energy"]) )
-            o.setText( 4, unicode(value) )
-            #the next line is there to auto-expand the items
-            self.treeWidget.expandItem( topItem )
 
         self.updateUi()
 
@@ -127,7 +115,24 @@ class MainDialog(QDialog,
             self.foodCombo.addItem( i.data["name"] )
 
         self.updateCounter()
-        self.saveFoodList()
+        self.updateTreeWidget()
+
+    def updateTreeWidget(self):
+        self.treeWidget.clear()
+
+        # Iterating over all fooditems in the list
+        for key, value in self.foodlist.iteritems():
+            food = self.findFood(key)
+            topItem = QTreeWidgetItem(self.treeWidget)
+            o = QTreeWidgetItem( topItem )
+            topItem.setText( 0, food.data["name"] )
+            o.setText( 0, unicode(food.data["fat"]) )
+            o.setText( 1, unicode(food.data["carbon"]) )
+            o.setText( 2, unicode(food.data["protein"]) )
+            o.setText( 3, unicode(food.data["energy"]) )
+            o.setText( 4, unicode(value) )
+            #the next line is there to auto-expand the items
+            self.treeWidget.expandItem( topItem )
 
     def getDataOfTheDay(self):
         """ Return a list of the things that have been added for the day """
@@ -154,6 +159,23 @@ class MainDialog(QDialog,
 
         writer = csv.DictWriter(open(savefilename, "wb"), ["name", "factor"] )
         writer.writerows( self.getDataOfTheDay() )
+
+    def loadFoodFromDate(self, date):
+        """ Loading the data of the given date """
+
+        filename = str(date.year()) + "-" \
+                + str(date.month()) + "-" + str(date.day()) + ".csv"
+
+        print "Filename: " + filename
+        
+        reader = csv.reader( open( filename,  "rb"))
+        for row in reader:
+            name = row[0]
+            factor = float(row[1])
+            food = self.findFood(name)
+            self.addFoodToDatabase( food, factor )
+
+        self.updateUi()
 
     def loadFood(self):
         """ In this method the file food.csv is loaded and put
