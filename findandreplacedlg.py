@@ -16,11 +16,11 @@ import ui_findandreplacedlg
 
 debug = True
 
-class FindAndReplaceDlg(QDialog,
+class MainDialog(QDialog,
         ui_findandreplacedlg.Ui_MainDlg):
 
     def __init__(self, parent=None):
-        super(FindAndReplaceDlg, self).__init__(parent)
+        super(MainDialog, self).__init__(parent)
         self.setupUi(self)
 
         # This dictionary saves all food for the day
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     import sys
 
     app = QApplication(sys.argv)
-    form = FindAndReplaceDlg()
+    form = MainDialog()
     form.show()
     app.exec_()
 
