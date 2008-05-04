@@ -44,6 +44,7 @@ class MainDialog(QDialog,
                 self.dateChanged)
 
         self.updateUi()
+        self.dateChanged( QDate.currentDate() )
 
     def dateChanged(self, date):
         print date.toString()
@@ -154,7 +155,7 @@ class MainDialog(QDialog,
         """
         
         currentDate = self.dateEdit.date()
-        savefilename = str(currentDate.year()) + "-" \
+        savefilename = "days/" + str(currentDate.year()) + "-" \
                 + str(currentDate.month()) + "-" + str(currentDate.day()) + ".csv"
 
         writer = csv.DictWriter(open(savefilename, "wb"), ["name", "factor"] )
@@ -163,7 +164,7 @@ class MainDialog(QDialog,
     def loadFoodFromDate(self, date):
         """ Loading the data of the given date """
 
-        filename = str(date.year()) + "-" \
+        filename = "days/" + str(date.year()) + "-" \
                 + str(date.month()) + "-" + str(date.day()) + ".csv"
 
         print "Filename: " + filename
