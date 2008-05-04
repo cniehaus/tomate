@@ -12,6 +12,7 @@
 import csv
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from datetime import *
 import ui_maindlg
 
 from foodclasses import *
@@ -28,6 +29,9 @@ class MainDialog(QDialog,
 
         self.food = []
         self.loadFood() # Now fill the list so that the data can be accessed
+
+        date = datetime.today()
+        self.dateEdit.setDate( QDate( date.year, date.month, date.day ) )
 
         self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
         self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
@@ -69,11 +73,11 @@ class MainDialog(QDialog,
             topItem = QTreeWidgetItem(self.treeWidget)
             o = QTreeWidgetItem( topItem )
             topItem.setText( 0, food.data["name"] )
-            o.setText( 0, str(food.data["fat"]) )
-            o.setText( 1, str(food.data["carbon"]) )
-            o.setText( 2, str(food.data["protein"]) )
-            o.setText( 3, str(food.data["energy"]) )
-            o.setText( 4, str(value) )
+            o.setText( 0, unicode(food.data["fat"]) )
+            o.setText( 1, unicode(food.data["carbon"]) )
+            o.setText( 2, unicode(food.data["protein"]) )
+            o.setText( 3, unicode(food.data["energy"]) )
+            o.setText( 4, unicode(value) )
             #the next line is there to auto-expand the items
             self.treeWidget.expandItem( topItem )
 
@@ -113,6 +117,33 @@ class MainDialog(QDialog,
             self.foodCombo.addItem( i.data["name"] )
 
         self.updateCounter()
+        self.saveFoodList()
+
+    def getDataOfTheDay(self):
+        """ Return a list of the things that have been added for the day """
+        
+        data = []
+        for key, value in self.foodlist.iteritems():
+            food = self.findFood(key)
+
+            set = { "name" : food.data["name"], "factor" : value }
+            data.append(set)
+        return data
+
+    def saveFoodList(self):
+        """ save the food of one day 
+        
+        The fileformat is very simple: Just the name of the product in
+        first place, then the amount it was consumed that day. The are 
+        seperated with a comma.
+        """
+        
+        currentDate = self.dateEdit.date()
+        savefilename = str(currentDate.year()) + "-" \
+                + str(currentDate.month()) + "-" + str(currentDate.day()) + ".csv"
+
+        writer = csv.DictWriter(open(savefilename, "wb"), ["name", "factor"] )
+        writer.writerows( self.getDataOfTheDay() )
 
     def loadFood(self):
         """ In this method the file food.csv is loaded and put
