@@ -26,11 +26,13 @@ class MainDialog(QDialog,
         # This dictionary saves all food for the day
         self.foodlist = {}
 
+        self.food = []
+        self.loadFood() # Now fill the list so that the data can be accessed
+
         self.connect(self.addButton, SIGNAL("clicked()"), self.addFood)
         self.connect(self.foodstyle, SIGNAL("activated(int)"), self.updateUi)
 
         self.updateUi()
-        self.loadFood()
 
     def updateCounter(self):
         """ This method updates all four LCD displays """
@@ -86,8 +88,8 @@ class MainDialog(QDialog,
         print "Food amount after : ", self.foodlist[food.data["name"] ]
 
     def findFood(self, name):
-        tempList = self.loadFood()
-        #print "searching for ", name
+        """ return the food with the name 'name' """
+        tempList = self.food
         for i in tempList:
             if i.data["name"] == name:
                 print "found ", i.data["name"]
@@ -98,9 +100,8 @@ class MainDialog(QDialog,
         self.foodCombo.clear()
 
         L = []
-        tempList = self.loadFood()
 
-        for i in tempList:
+        for i in self.food:
             if self.foodstyle.currentIndex() == 0:
                 if i.data["liquid"] == True:
                     L.append( i )
@@ -116,7 +117,6 @@ class MainDialog(QDialog,
     def loadFood(self):
         """ In this method the file food.csv is loaded and put
         into the internal datastructur """
-        l = []
 
         reader = csv.reader( open( "food.csv",  "rb"))
         for row in reader:
@@ -127,9 +127,7 @@ class MainDialog(QDialog,
             protein = float(row[4])
             energy = float(row[5])
             liquid = bool(int(row[6]))
-            l.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
-
-        return l
+            self.food.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
 
 if __name__ == "__main__":
     import sys
