@@ -14,7 +14,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import ui_maindlg
 
-debug = True
+from foodclasses import *
 
 class MainDialog(QDialog,
         ui_maindlg.Ui_MainDlg):
@@ -133,24 +133,6 @@ class MainDialog(QDialog,
             l.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
 
         return l
-
-class FoodObject:
-    def __init__(self, foodname, amount, fat, carbon, protein, energy, liquid = False):
-        self.foodname = foodname
-        self.amount = amount
-        self.fat = fat
-        self.carbon = carbon
-        self.protein = protein
-        self.energy = energy
-        self.liquid = liquid
-
-        if not debug:
-            return
-
-        if liquid:
-            print "New liquid: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
-        else:
-            print "New food: %s with %d KCal and %s fat" % (self.foodname, self.energy, self.fat)
 
 if __name__ == "__main__":
     import sys
