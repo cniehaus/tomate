@@ -22,6 +22,8 @@ class FoodObject:
             return
 
         if liquid:
-            print "New liquid: %s with %d KCal and %s fat" % (self.data["name"], self.data["energy"], self.data["fat"])
+            print "New liquid: %s with %d KCal and %s fat" \
+                    % (self.data["name"], self.data["energy"], self.data["fat"])
         else:
-            print "New food: %s with %d KCal and %s fat" % (self.data["name"], self.data["energy"], self.data["fat"])
+            print "New food: %s with %d KCal and %s fat" \
+                    % (self.data["name"], self.data["energy"], self.data["fat"])

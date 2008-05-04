@@ -127,7 +127,8 @@ class MainDialog(QDialog,
             protein = float(row[4])
             energy = float(row[5])
             liquid = bool(int(row[6]))
-            self.food.append( FoodObject( name, amount, fat, carbon, protein, energy, liquid ) )
+            self.food.append( FoodObject( name, amount, fat, carbon, \
+                    protein, energy, liquid ) )
 
 if __name__ == "__main__":
     import sys
