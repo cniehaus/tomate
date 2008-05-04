@@ -44,7 +44,7 @@ class MainDialog(QDialog,
                 self.dateChanged)
 
         self.updateUi()
-        self.dateChanged( QDate.currentDate() )
+        #self.dateChanged( QDate.currentDate() )
 
     def dateChanged(self, date):
         print date.toString()
@@ -97,6 +97,8 @@ class MainDialog(QDialog,
             if i.data["name"] == name:
                 #print "found ", i.data["name"]
                 return i
+
+        return None
 
     def updateUi(self):
         """ Update all GUI-elements """
@@ -167,14 +169,15 @@ class MainDialog(QDialog,
         filename = "days/" + str(date.year()) + "-" \
                 + str(date.month()) + "-" + str(date.day()) + ".csv"
 
-        print "Filename: " + filename
-        
         reader = csv.reader( open( filename,  "rb"))
         for row in reader:
+            if row[0].startswith( "#" ):
+                pass
             name = row[0]
             factor = float(row[1])
             food = self.findFood(name)
-            self.addFoodToDatabase( food, factor )
+            if food:
+                self.addFoodToDatabase( food, factor )
 
         self.updateUi()
 
