@@ -12,12 +12,12 @@
 import csv
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-import ui_findandreplacedlg
+import ui_maindlg
 
 debug = True
 
 class MainDialog(QDialog,
-        ui_findandreplacedlg.Ui_MainDlg):
+        ui_maindlg.Ui_MainDlg):
 
     def __init__(self, parent=None):
         super(MainDialog, self).__init__(parent)
