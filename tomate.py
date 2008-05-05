@@ -189,8 +189,8 @@ class MainDialog(QDialog,
                 lino += 1
                 content = line.split(",")
                 name = content[0]
-                factor = content[1]
-                print "Trying to add '%s' '%2f' times" % (name,factor)
+                factor = float(content[1])
+                print "Trying to add '%s' '%f' times" % (name,factor)
                 f = self.findFood( name )
                 if f is not None:
                     self.addFoodToDatabase( f, factor )
