@@ -181,7 +181,6 @@ class MainDialog(QDialog,
                 raise IOError, unicode(fh.errorString())
             stream = QTextStream(fh)
             stream.setCodec("UTF-8")
-            #self.clear(False)
 
             while not stream.atEnd():
                 name = None
@@ -215,7 +214,6 @@ class MainDialog(QDialog,
             lino = 0
             if not fh.open(QIODevice.ReadOnly):
                 raise IOError, unicode(fh.errorString())
-            
             stream = QTextStream(fh)
             stream.setCodec("UTF-8")
 
@@ -224,7 +222,6 @@ class MainDialog(QDialog,
                 line = stream.readLine()
                 lino += 1
                 content = line.split(",")
-                name = content.first()
                 name = content[0]
                 amount = int(content[1])
                 fat = float(content[2])
