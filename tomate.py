@@ -10,6 +10,7 @@
 # the GNU General Public License for more details.
 
 import csv
+import codecs
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from datetime import *
@@ -47,7 +48,7 @@ class MainDialog(QDialog,
         #self.dateChanged( QDate.currentDate() )
 
     def dateChanged(self, date):
-        print date.toString()
+        #print date.toString()
         self.loadFoodFromDate(date)
 
     def setDateToToday(self):
@@ -169,33 +170,75 @@ class MainDialog(QDialog,
         filename = "days/" + str(date.year()) + "-" \
                 + str(date.month()) + "-" + str(date.day()) + ".csv"
 
-        reader = csv.reader( open( filename,  "rb"))
-        for row in reader:
-            if row[0].startswith( "#" ):
-                pass
-            name = row[0]
-            factor = float(row[1])
-            food = self.findFood(name)
-            if food:
-                self.addFoodToDatabase( food, factor )
+        print "Trying to load this file: ", filename
+        error = None
+        fh = None
+
+        try:
+            fh = QFile( filename )
+            lino = 0
+            if not fh.open(QIODevice.ReadOnly):
+                raise IOError, unicode(fh.errorString())
+            stream = QTextStream(fh)
+            stream.setCodec("UTF-8")
+            #self.clear(False)
+
+            while not stream.atEnd():
+                name = None
+                line = stream.readLine()
+                lino += 1
+                content = line.split(",")
+                name = content[0]
+                factor = content[1]
+                print "Trying to add '%s' '%2f' times" % (name,factor)
+                f = self.findFood( name )
+                if f is not None:
+                    self.addFoodToDatabase( f, factor )
+                else:
+                    print "Food not found..."
+
+        except (IOError, OSError, ValueError), e:
+            error = "Failed to load: %s on line %d" % (e, lino)
 
         self.updateUi()
 
     def loadFood(self):
         """ In this method the file food.csv is loaded and put
-        into the internal datastructur """
+        into the internal datastructure """
+        
+        error = None
+        fh = None
 
-        reader = csv.reader( open( "food.csv",  "rb"))
-        for row in reader:
-            name = row[0]
-            amount = int(row[1])
-            fat = float(row[2])
-            carbon = float(row[3])
-            protein = float(row[4])
-            energy = float(row[5])
-            liquid = bool(int(row[6]))
-            self.food.append( FoodObject( name, amount, fat, carbon, \
-                    protein, energy, liquid ) )
+        try:
+            filename = "test.csv"
+            print "Now reading the file %s." % filename
+            fh = QFile( filename )
+            if not fh.open(QIODevice.ReadOnly):
+                raise IOError, unicode(fh.errorString())
+            
+            lino = 0
+            stream = QTextStream(fh)
+            stream.setCodec("UTF-8")
+
+            while not stream.atEnd():
+                name = None
+                line = stream.readLine()
+                lino += 1
+                content = line.split(",")
+                name = content.first()
+                name = content[0]
+                amount = int(content[1])
+                fat = float(content[2])
+                carbon = float(content[3])
+                protein = float(content[4])
+                energy = float(content[5])
+                liquid = bool(int(content[6]))
+                self.food.append( FoodObject( name, amount, fat, carbon, \
+                        protein, energy, liquid ) )
+
+        except (IOError, OSError, ValueError), e:
+            error = "Failed to load: %s on line %d" % (e, lino)
+
 
 if __name__ == "__main__":
     import sys
