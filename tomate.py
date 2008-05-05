@@ -122,6 +122,12 @@ class MainDialog(QDialog,
         self.updateTreeWidget()
 
     def updateTreeWidget(self):
+        """ This method iterates over all items in the foodlist 
+        for the day and then adds one food after the other to the
+        QTreeWidget
+        """
+
+        # Starting from zero
         self.treeWidget.clear()
 
         # Iterating over all fooditems in the list
@@ -130,11 +136,12 @@ class MainDialog(QDialog,
             topItem = QTreeWidgetItem(self.treeWidget)
             o = QTreeWidgetItem( topItem )
             topItem.setText( 0, food.data["name"] )
-            o.setText( 0, unicode(food.data["fat"]) )
-            o.setText( 1, unicode(food.data["carbon"]) )
-            o.setText( 2, unicode(food.data["protein"]) )
-            o.setText( 3, unicode(food.data["energy"]) )
+            o.setText( 0, "%s g" % unicode(food.data["fat"]))
+            o.setText( 1, "%s g" % unicode(food.data["carbon"]))
+            o.setText( 2, "%s mg" % unicode(food.data["protein"]))
+            o.setText( 3, "%s kCal" %unicode(food.data["energy"]))
             o.setText( 4, unicode(value) )
+
             #the next line is there to auto-expand the items
             self.treeWidget.expandItem( topItem )
 
