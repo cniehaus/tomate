@@ -1,0 +1,34 @@
+<ui version="4.0" >
+ <class>StatWidget</class>
+ <widget class="QWidget" name="StatWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTableWidget" name="tableWidget" >
+     <column>
+      <property name="text" >
+       <string>Neue Spalte</string>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>Neue Spalte</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
