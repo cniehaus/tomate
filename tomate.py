@@ -210,13 +210,12 @@ class MainDialog(QDialog,
         fh = None
 
         try:
-            filename = "test.csv"
-            print "Now reading the file %s." % filename
+            filename = "food.csv"
             fh = QFile( filename )
+            lino = 0
             if not fh.open(QIODevice.ReadOnly):
                 raise IOError, unicode(fh.errorString())
             
-            lino = 0
             stream = QTextStream(fh)
             stream.setCodec("UTF-8")
 
