@@ -14,6 +14,7 @@ import codecs
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from datetime import *
+from bmiwidget import *
 import ui_maindlg
 
 from foodclasses import *
@@ -24,6 +25,8 @@ class MainDialog(QDialog,
     def __init__(self, parent=None):
         super(MainDialog, self).__init__(parent)
         self.setupUi(self)
+
+        self.bmi = BMIWid(self)
 
         # This dictionary saves all food for the day
         self.foodlist = {}
