@@ -20,4 +20,32 @@ class BMIWid(QWidget,
     def __init__(self, parent=None):
         super(BMIWid, self).__init__(parent)
         self.setupUi(self)
+        self.setDateToToday()
+        
+        self.connect(self.height_, SIGNAL("valueChanged(int)"), \
+                self.updateUi)
+        self.connect(self.age_, SIGNAL("valueChanged(int)"), \
+                self.updateUi)
+        self.connect(self.weight_, SIGNAL("valueChanged(double)"), \
+                self.updateUi)
 
+    def updateUi(self):
+        """ Update the GUI """
+        bmi = self.calculateBMI()
+        self.bmi_label.setText( unicode( bmi ) )
+
+    def calculateBMI(self):
+        """ return the BMI for the given values.
+
+        The SpinBox gets the value in centimeter. Therefore we need to
+        divide by 1000.
+        """
+        w = float( self.weight_.value() )
+        h = float( self.height_.value() )
+
+        bmi = w / ( h**2 / 10000 )
+        return bmi
+
+    def setDateToToday(self):
+        """ Set the DateEdit to todays day """
+        self.dateEdit.setDate( QDate.currentDate() ) 

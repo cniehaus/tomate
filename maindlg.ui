@@ -5,317 +5,297 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
-    <height>425</height>
+    <width>537</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Julias Kalorienrechner</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget" >
-   <property name="geometry" >
-    <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>419</width>
-     <height>374</height>
-    </rect>
-   </property>
-   <property name="currentIndex" >
-    <number>1</number>
-   </property>
-   <widget class="QWidget" name="tab" >
-    <attribute name="title" >
-     <string>Eingeben</string>
-    </attribute>
-    <layout class="QGridLayout" >
-     <item row="0" column="0" >
-      <widget class="QLabel" name="label_5" >
-       <property name="text" >
-        <string>Daten eingeben für:</string>
-       </property>
-       <property name="buddy" >
-        <cstring>dateEdit</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1" >
-      <widget class="QDateEdit" name="dateEdit" >
-       <property name="displayFormat" >
-        <string>dd MMMM yyyy</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2" colspan="2" >
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>271</width>
-         <height>27</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="4" >
-      <widget class="QPushButton" name="todayButton" >
-       <property name="text" >
-        <string>Heute</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="5" >
-      <widget class="QTreeWidget" name="treeWidget" >
-       <property name="sortingEnabled" >
-        <bool>true</bool>
-       </property>
-       <property name="animated" >
-        <bool>true</bool>
-       </property>
-       <column>
-        <property name="text" >
-         <string>Fett</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Kohlenhydrate</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Protein</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Kilokalorien</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Faktor</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="5" >
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
-        <string>Übersicht</string>
-       </property>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QLabel" name="label" >
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>Eingeben</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_5" >
+         <property name="text" >
+          <string>Daten eingeben für:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>dateEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QDateEdit" name="dateEdit" >
+         <property name="displayFormat" >
+          <string>d MMMM yyyy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>271</width>
+           <height>27</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4" >
+        <widget class="QPushButton" name="todayButton" >
+         <property name="text" >
+          <string>Heute</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5" >
+        <widget class="QTreeWidget" name="treeWidget" >
+         <property name="sortingEnabled" >
+          <bool>true</bool>
+         </property>
+         <property name="animated" >
+          <bool>true</bool>
+         </property>
+         <column>
           <property name="text" >
            <string>Fett</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="1" >
-         <widget class="QLabel" name="label_2" >
+         </column>
+         <column>
           <property name="text" >
            <string>Kohlenhydrate</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="2" >
-         <widget class="QLabel" name="label_3" >
+         </column>
+         <column>
+          <property name="text" >
+           <string>Protein</string>
+          </property>
+         </column>
+         <column>
           <property name="text" >
            <string>Kilokalorien</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="3" >
-         <widget class="QLabel" name="label_4" >
+         </column>
+         <column>
           <property name="text" >
-           <string>Eiweiße</string>
+           <string>Faktor</string>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QLCDNumber" name="fatlcd" >
-          <property name="frameShape" >
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="frameShadow" >
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="segmentStyle" >
-           <enum>QLCDNumber::Flat</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QLCDNumber" name="carbonlcd" >
-          <property name="frameShadow" >
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="segmentStyle" >
-           <enum>QLCDNumber::Flat</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2" >
-         <widget class="QLCDNumber" name="kcallcd" >
-          <property name="frameShadow" >
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="segmentStyle" >
-           <enum>QLCDNumber::Flat</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3" >
-         <widget class="QLCDNumber" name="proteinlcd" >
-          <property name="frameShadow" >
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="segmentStyle" >
-           <enum>QLCDNumber::Flat</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="3" >
-      <widget class="QComboBox" name="foodCombo" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize" >
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <item>
-        <property name="text" >
-         <string>Salat</string>
-        </property>
+         </column>
+        </widget>
        </item>
-       <item>
-        <property name="text" >
-         <string>Tomate</string>
-        </property>
+       <item row="2" column="0" colspan="5" >
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Übersicht</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Fett</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Kohlenhydrate</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>Kilokalorien</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" >
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>Eiweiße</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLCDNumber" name="fatlcd" >
+            <property name="frameShape" >
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow" >
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="segmentStyle" >
+             <enum>QLCDNumber::Flat</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QLCDNumber" name="carbonlcd" >
+            <property name="frameShadow" >
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="segmentStyle" >
+             <enum>QLCDNumber::Flat</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <widget class="QLCDNumber" name="kcallcd" >
+            <property name="frameShadow" >
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="segmentStyle" >
+             <enum>QLCDNumber::Flat</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3" >
+           <widget class="QLCDNumber" name="proteinlcd" >
+            <property name="frameShadow" >
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="segmentStyle" >
+             <enum>QLCDNumber::Flat</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
-       <item>
-        <property name="text" >
-         <string>Bier</string>
-        </property>
+       <item row="3" column="0" colspan="3" >
+        <widget class="QComboBox" name="foodCombo" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>50</width>
+           <height>0</height>
+          </size>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Salat</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Tomate</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Bier</string>
+          </property>
+         </item>
+        </widget>
        </item>
-      </widget>
-     </item>
-     <item row="3" column="3" >
-      <widget class="QDoubleSpinBox" name="doubleSpinBox" >
-       <property name="maximumSize" >
-        <size>
-         <width>70</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="decimals" >
-        <number>1</number>
-       </property>
-       <property name="minimum" >
-        <double>0.500000000000000</double>
-       </property>
-       <property name="value" >
-        <double>1.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="4" >
-      <widget class="QComboBox" name="foodstyle" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text" >
-         <string>Getränk</string>
-        </property>
+       <item row="3" column="3" >
+        <widget class="QDoubleSpinBox" name="doubleSpinBox" >
+         <property name="maximumSize" >
+          <size>
+           <width>70</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="decimals" >
+          <number>1</number>
+         </property>
+         <property name="minimum" >
+          <double>0.500000000000000</double>
+         </property>
+         <property name="value" >
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text" >
-         <string>Essen</string>
-        </property>
+       <item row="3" column="4" >
+        <widget class="QComboBox" name="foodstyle" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Getränk</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Essen</string>
+          </property>
+         </item>
+        </widget>
        </item>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2" >
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>221</width>
-         <height>27</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="4" column="2" colspan="2" >
-      <widget class="QPushButton" name="saveButton" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>Liste speichern</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="4" >
-      <widget class="QPushButton" name="addButton" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>&amp;Hinzufügen</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="Seite" >
-    <attribute name="title" >
-     <string>Sport</string>
-    </attribute>
-   </widget>
-   <widget class="QWidget" name="Statistik" >
-    <attribute name="title" >
-     <string>Statistik</string>
-    </attribute>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="closeButton" >
-   <property name="geometry" >
-    <rect>
-     <x>351</x>
-     <y>389</y>
-     <width>77</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text" >
-    <string>Close</string>
-   </property>
-  </widget>
+       <item row="4" column="0" colspan="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>221</width>
+           <height>27</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="2" colspan="2" >
+        <widget class="QPushButton" name="saveButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>Liste speichern</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4" >
+        <widget class="QPushButton" name="addButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>&amp;Hinzufügen</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QPushButton" name="closeButton" >
+     <property name="text" >
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>

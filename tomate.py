@@ -11,10 +11,13 @@
 
 import csv
 import codecs
+
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from datetime import *
 from bmiwidget import *
+from stat_widget import *
+
 import ui_maindlg
 
 from foodclasses import *
@@ -26,7 +29,8 @@ class MainDialog(QDialog,
         super(MainDialog, self).__init__(parent)
         self.setupUi(self)
 
-        self.bmi = BMIWid(self)
+        self.setupTabs()
+
 
         # This dictionary saves all food for the day
         self.foodlist = {}
@@ -49,6 +53,12 @@ class MainDialog(QDialog,
 
         self.updateUi()
         #self.dateChanged( QDate.currentDate() )
+
+    def setupTabs(self):
+        bmi = BMIWid(self)
+        self.tabWidget.addTab( bmi, "BMI" )
+        stats = StatsWidget(self)
+        self.tabWidget.addTab( stats, "Statistiken" )
 
     def dateChanged(self, date):
         #print date.toString()
