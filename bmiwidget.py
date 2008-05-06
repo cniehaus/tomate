@@ -12,6 +12,8 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+from personclasses import * 
+
 import ui_bmiwidget
 
 class BMIWid(QWidget,
@@ -22,6 +24,10 @@ class BMIWid(QWidget,
         self.setupUi(self)
         self.setDateToToday()
         
+        self.activePerson = Person("Julia")
+        
+        self.connect(self.dateEdit, SIGNAL("dateChanged(QDate)"), \
+                self.updateUi)
         self.connect(self.height_, SIGNAL("valueChanged(int)"), \
                 self.updateUi)
         self.connect(self.age_, SIGNAL("valueChanged(int)"), \
@@ -29,8 +35,17 @@ class BMIWid(QWidget,
         self.connect(self.weight_, SIGNAL("valueChanged(double)"), \
                 self.updateUi)
 
+        self.fillPersonCombo()
+        self.updateUi()
+
+    def fillPersonCombo(self):
+        p = Person("Julia")
+        self.personsCombo.addItem( p.name )
+
     def updateUi(self):
         """ Update the GUI """
+        w = self.activePerson.weightOfDate( self.dateEdit.date() )
+        #self.weight_.setValue( w )
         bmi = self.calculateBMI()
         self.bmi_label.setText( unicode( bmi ) )
 

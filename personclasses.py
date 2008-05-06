@@ -37,6 +37,14 @@ class Person:
 
         self.loadData()
 
+    def weightOfDate(self, date):
+        try:
+            d = self.weight[date]
+            print "Found weight %d for %s" % (d, date.toString())
+            return d
+        except (KeyError), e:
+            print "Date %s not found, ignoring input" % date.toString()
+
     def loadData(self):
         print "Loading data"
 
@@ -82,6 +90,3 @@ class Person:
         content = date.split( "-" )
         d = QDate( int(content[0]), int(content[1]), int(content[2]) )
         return d
-        
-    
-p = Person("Julia")
